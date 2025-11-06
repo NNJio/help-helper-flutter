@@ -50,19 +50,20 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyDhiJhGZ1Vk2hyL-_wkTzlkDsQp0ekqJXM',
-    appId: '1:331067771022:android:31c4791b31d2076cc6a1df',
-    messagingSenderId: '331067771022',
-    projectId: 'help-hup-project',
-    storageBucket: 'help-hup-project.firebasestorage.app',
+    apiKey: 'AIzaSyB5TRrTW61_wC8Bx983sK2tckq7k_SjUzg',
+    appId: '1:522328848519:android:bacd876ca2e5fd099de022',
+    messagingSenderId: '522328848519',
+    projectId: 'help-hub-helper',
+    storageBucket: 'help-hub-helper.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyDTbYFnkjoR90Sogdu12mBy73c__t9aFjA',
-    appId: '1:331067771022:ios:1d03ebd1cc07df80c6a1df',
-    messagingSenderId: '331067771022',
-    projectId: 'help-hup-project',
-    storageBucket: 'help-hup-project.firebasestorage.app',
-    iosBundleId: 'com.example.help',
+    apiKey: 'AIzaSyBBu9CEdgThGDahZ4ekgqAaO3p5MT9hJS4',
+    appId: '1:522328848519:ios:3365659787e7847c9de022',
+    messagingSenderId: '522328848519',
+    projectId: 'help-hub-helper',
+    storageBucket: 'help-hub-helper.firebasestorage.app',
+    iosBundleId: 'com.example.helpHelper',
   );
+
 }

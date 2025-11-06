@@ -8,6 +8,21 @@
 	<string>Help Helper</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
+	<key>CLIENT_ID</key>
+	<string>522328848519-ep7o4dstt7ra2irv3sacr7n1fuisg7ch.apps.googleusercontent.com</string>
+
+	<!-- ✅ URL Scheme สำหรับ Google Sign-In -->
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.522328848519-ep7o4dstt7ra2irv3sacr7n1fuisg7ch</string>
+			</array>
+		</dict>
+	</array>
 	<key>CFBundleIdentifier</key>
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
