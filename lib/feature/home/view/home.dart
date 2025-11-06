@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:help_helper/feature/history/view/history.dart';
+import 'package:help_helper/feature/nearby_jobs/view/nearby_jobs.dart';
 import 'package:help_helper/feature/profile/view/profile.dart';
 import 'package:help_helper/shared/componets/label.dart';
 import 'package:help_helper/shared/componets/scaffold_customs.dart';
@@ -31,14 +32,14 @@ class _HomePageState extends ConsumerState<HomePage> {
             ),
             addVerticalSpace(12.h),
             const Label(
-              'ล็อกอินสำเร็จด้วย OTP',
+              'ล็อกอินสำเร็จด้วย Google Sign In',
               styleKey: StyleKey.bodyText2,
             ),
           ],
         ),
       ),
       const HistoryPage(),
-      // if (isHelper) const NearbyJobsPage(),
+      const NearbyJobsPage(),
       const ProfilePage(),
     ];
 
@@ -46,7 +47,7 @@ class _HomePageState extends ConsumerState<HomePage> {
     final navItems = <BottomNavigationBarItem>[
       const BottomNavigationBarItem(icon: Icon(Icons.home), label: ''),
       const BottomNavigationBarItem(icon: Icon(Icons.history), label: ''),
-      // if (isHelper) const BottomNavigationBarItem(icon: Icon(Icons.location_on), label: ''),
+      const BottomNavigationBarItem(icon: Icon(Icons.location_on), label: ''),
       const BottomNavigationBarItem(icon: Icon(Icons.person), label: ''),
     ];
 

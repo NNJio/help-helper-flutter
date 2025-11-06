@@ -10,6 +10,7 @@ import 'package:help_helper/shared/componets/label.dart';
 import 'package:help_helper/shared/componets/push_page.dart';
 import 'package:help_helper/shared/componets/scaffold_customs.dart';
 import 'package:help_helper/shared/componets/social_login_button.dart';
+import 'package:help_helper/shared/componets/space.dart';
 import 'package:help_helper/shared/componets/top_snackbar.dart';
 import 'package:help_helper/shared/services/auth/google_auth.dart';
 import 'package:help_helper/shared/theme/color.dart';
@@ -21,16 +22,13 @@ class LoginPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return ScaffoldCustoms(
-      appBar: AppBar(
-        foregroundColor: ColorConstants.textTheme,
-        backgroundColor: Colors.transparent,
-      ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         // crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          addVerticalSpace(20.h),
           Image.asset(
-            'assets/images/user_role.png',
+            'assets/images/helper_role.png',
             width: 200.w,
             height: 200.h,
             fit: BoxFit.cover,

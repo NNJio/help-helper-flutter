@@ -31,8 +31,8 @@ class ScaffoldCustoms extends ConsumerWidget {
       begin: Alignment.topCenter,
       end: Alignment.bottomCenter,
       colors: [
-        ColorConstants.userTheme,
-        Color(0xFFFBEBDD),
+        ColorConstants.helperTheme,
+        Color(0xFFFFD392),
         ColorConstants.backgroundColor,
       ],
     );
