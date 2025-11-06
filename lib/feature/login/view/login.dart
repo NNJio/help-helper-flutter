@@ -1,5 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'package:firebase_auth/firebase_auth.dart' show FirebaseAuth, PhoneAuthCredential, FirebaseAuthException;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -16,11 +17,14 @@ import 'package:help_helper/shared/services/auth/google_auth.dart';
 import 'package:help_helper/shared/theme/color.dart';
 import 'package:help_helper/shared/utils/constants/enums.dart';
 
+import '../../../shared/utils/provider/provider.dart';
+
 class LoginPage extends ConsumerWidget {
   const LoginPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final phoneController = TextEditingController();
     return ScaffoldCustoms(
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -44,6 +48,7 @@ class LoginPage extends ConsumerWidget {
             fontSize: 16.sp,
           ),
           TextField(
+            controller: phoneController,
             decoration: InputDecoration(
               filled: true,
               fillColor: Colors.white,
@@ -56,7 +61,26 @@ class LoginPage extends ConsumerWidget {
             ),
           ),
           InkWell(
-            onTap: () => go(context, const OtpPage()),
+            onTap: () async {
+              // หรือถ้ามีอยู่แล้ว ให้ใช้ของเดิม
+              final phoneNumber = '+66' + phoneController.text.substring(1);
+
+              await FirebaseAuth.instance.verifyPhoneNumber(
+                phoneNumber: phoneNumber,
+                verificationCompleted: (PhoneAuthCredential credential) async {
+                  await FirebaseAuth.instance.signInWithCredential(credential);
+                  go(context, const HomePage());
+                },
+                verificationFailed: (FirebaseAuthException e) {
+                  TopSnackbar.show(context, 'ส่ง OTP ไม่สำเร็จ: ${e.message}');
+                },
+                codeSent: (String verificationId, int? resendToken) {
+                  ref.read(otpVerifyIdProvider.notifier).state = verificationId;
+                  go(context, const OtpPage());
+                },
+                codeAutoRetrievalTimeout: (String verificationId) {},
+              );
+            },
             child: Container(
               width: double.infinity,
               height: 48.h,

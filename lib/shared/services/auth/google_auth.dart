@@ -21,7 +21,16 @@ class AuthService {
   }
 
   Future<void> signOut() async {
+    // ออกจาก Firebase (ทุก provider)
     await _auth.signOut();
-    await _googleSignIn.signOut();
+
+    // ถ้ามี Google Sign-In session อยู่ด้วย
+    try {
+      await _googleSignIn.signOut();
+    } catch (e) {
+      print('ไม่พบ Google session หรือออกจากระบบแล้ว');
+    }
+
+    print('ออกจากระบบเรียบร้อย');
   }
 }
