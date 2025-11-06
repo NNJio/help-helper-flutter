@@ -1,12 +1,13 @@
-// ignore_for_file: use_build_context_synchronously
+// ignore_for_file: prefer_interpolation_to_compose_strings, use_build_context_synchronously
 
-import 'package:firebase_auth/firebase_auth.dart' show FirebaseAuth, PhoneAuthCredential, FirebaseAuthException;
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:help_helper/feature/home/view/home.dart';
 import 'package:help_helper/feature/otp/view/otp.dart';
-import 'package:help_helper/feature/register/view/register.dart';
+import 'package:help_helper/shared/componets/custom_dialog.dart';
 import 'package:help_helper/shared/componets/label.dart';
 import 'package:help_helper/shared/componets/push_page.dart';
 import 'package:help_helper/shared/componets/scaffold_customs.dart';
@@ -24,6 +25,7 @@ class LoginPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final formKey = GlobalKey<FormState>();
     final phoneController = TextEditingController();
     return ScaffoldCustoms(
       body: Column(
@@ -47,24 +49,66 @@ class LoginPage extends ConsumerWidget {
             // styleKey: StyleKey.bodyText1,
             fontSize: 16.sp,
           ),
-          TextField(
-            controller: phoneController,
-            decoration: InputDecoration(
-              filled: true,
-              fillColor: Colors.white,
-              border: OutlineInputBorder(
-                borderSide: BorderSide.none,
-                borderRadius: BorderRadius.circular(14.r),
+          Form(
+            key: formKey,
+            child: TextFormField(
+              controller: phoneController,
+              keyboardType: TextInputType.phone,
+              inputFormatters: [
+                FilteringTextInputFormatter.digitsOnly,
+                LengthLimitingTextInputFormatter(10),
+              ],
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'กรุณากรอกเบอร์โทรศัพท์';
+                } else if (value.length < 9 || value.length > 10) {
+                  return 'กรุณากรอกเบอร์โทรศัพท์ให้ครบ 10 หลัก';
+                } else if (!value.startsWith('0')) {
+                  return 'เบอร์โทรต้องขึ้นต้นด้วย 0';
+                }
+                return null;
+              },
+              decoration: InputDecoration(
+                counterText: '',
+                filled: true,
+                fillColor: Colors.white,
+                hintText: 'กรุณากรอกเบอร์โทรศัพท์',
+                contentPadding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 14.h),
+
+                // ✅ border ปกติ (ไม่มี focus / error)
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide.none,
+                  borderRadius: BorderRadius.circular(14.r),
+                ),
+
+                // ✅ border ตอน focus
+                focusedBorder: OutlineInputBorder(
+                  borderSide: const BorderSide(color: ColorConstants.helperTheme, width: 1.5),
+                  borderRadius: BorderRadius.circular(14.r),
+                ),
+
+                // ✅ border ตอน error
+                errorBorder: OutlineInputBorder(
+                  borderSide: const BorderSide(color: Colors.red, width: 1.5),
+                  borderRadius: BorderRadius.circular(14.r),
+                ),
+
+                // ✅ border ตอน error + focus พร้อมกัน
+                focusedErrorBorder: OutlineInputBorder(
+                  borderSide: const BorderSide(color: Colors.red, width: 1.5),
+                  borderRadius: BorderRadius.circular(14.r),
+                ),
               ),
-              hintText: 'กรุณากรอกเบอร์โทรศัพท์',
-              contentPadding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 14.h),
             ),
           ),
           InkWell(
             onTap: () async {
-              // หรือถ้ามีอยู่แล้ว ให้ใช้ของเดิม
-              final phoneNumber = '+66' + phoneController.text.substring(1);
+              if (!formKey.currentState!.validate()) {
+                return;
+              }
 
+              final phoneNumber = '+66' + phoneController.text.substring(1);
+              ref.read(currentPhoneProvider.notifier).state = phoneNumber;
               await FirebaseAuth.instance.verifyPhoneNumber(
                 phoneNumber: phoneNumber,
                 verificationCompleted: (PhoneAuthCredential credential) async {
@@ -136,7 +180,12 @@ class LoginPage extends ConsumerWidget {
             fontSize: 16.sp,
           ),
           InkWell(
-            onTap: () => go(context, const RegisterPage()),
+            // onTap: () => go(context, const RegisterPage()), //! เปิดหน้า Register
+            onTap: () => CustomDialog.showDialogs(
+              context: context,
+              title: 'ยังไม่เปิดใช้งานในตอนนี้',
+              content: 'ระบบลงทะเบียนจะเปิดให้ใช้งานเร็ว ๆ นี้',
+            ),
             child: Label(
               'Register',
               fontSize: 16.sp,

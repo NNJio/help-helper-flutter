@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../utils/constants/enums.dart';
+import 'custom_dialog.dart';
 import 'label.dart';
 import 'space.dart';
 
@@ -24,7 +25,11 @@ class SocialLoginButtons extends StatelessWidget {
         _socialButton(
           iconAsset: 'assets/icons/apple.png',
           color: Colors.white,
-          onPressed: () {},
+          onPressed: () => CustomDialog.showDialogs(
+            context: context,
+            title: 'ยังไม่เปิดใช้งานในตอนนี้',
+            content: 'ระบบลงทะเบียนจะเปิดให้ใช้งานเร็ว ๆ นี้',
+          ),
           text: 'Login with Apple',
         ),
       ],
