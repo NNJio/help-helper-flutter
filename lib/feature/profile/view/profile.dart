@@ -19,68 +19,71 @@ class ProfilePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return SafeArea(
-      child: Column(
-        children: [
-          Row(
-            children: [
-              CircleAvatar(
-                radius: 32.r,
-                backgroundImage: const NetworkImage(
-                  'https://i.imgur.com/BoN9kdC.png',
+      child: GestureDetector(
+        onTap: () => FocusScope.of(context).unfocus(),
+        child: Column(
+          children: [
+            Row(
+              children: [
+                CircleAvatar(
+                  radius: 32.r,
+                  backgroundImage: const NetworkImage(
+                    'https://i.imgur.com/BoN9kdC.png',
+                  ),
                 ),
-              ),
-              addHorizontalSpace(16.w),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Label('Sabrina Aryan', fontSize: 20.sp, fontWeight: FontWeight.bold),
-                  Label('สถานะสมาชิก : Helper', fontSize: 14.sp, color: Colors.black54),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(16.r),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: List.generate(
-                        5,
-                        (index) => Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 2.w),
-                          child: const Icon(Icons.star, color: Colors.amber),
+                addHorizontalSpace(16.w),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Label('Sabrina Aryan', fontSize: 20.sp, fontWeight: FontWeight.bold),
+                    Label('สถานะสมาชิก : Helper', fontSize: 14.sp, color: Colors.black54),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(16.r),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: List.generate(
+                          5,
+                          (index) => Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 2.w),
+                            child: const Icon(Icons.star, color: Colors.amber),
+                          ),
                         ),
                       ),
-                    ),
-                  )
-                ],
-              ),
-            ],
-          ),
-          addVerticalSpace(24.h),
-          buildMenuItem(
-            icon: Icons.account_circle_outlined,
-            title: 'ข้อมูลส่วนตัว',
-            onTap: () => go(context, const ProfileDetailPage()),
-          ),
-          buildMenuItem(icon: Icons.paid_outlined, title: 'รายได้ของฉัน'),
-          buildMenuItem(icon: Icons.workspace_premium_outlined, title: 'สมัครรับการเป็น helper'),
-          buildMenuItem(icon: Icons.help_center_outlined, title: 'ศูนย์ความทนช่วยเหลือ'),
-          buildMenuItem(icon: Icons.article_outlined, title: 'นโยบายความเป็นส่วนตัว'),
-          Divider(thickness: 1, height: 32.h),
-          buildMenuItem(icon: Icons.language, title: 'ภาษา'),
-          buildMenuItem(icon: Icons.settings_outlined, title: 'การตั้งค่า'),
-          buildMenuItem(
-            icon: Icons.logout,
-            title: 'ออกจากระบบ',
-            onTap: () async {
-              try {
-                await AuthService().signOut();
-                go(context, const SplashPage());
-              } catch (e) {
-                TopSnackbar.show(context, 'Sign Out ล้มเหลว: $e');
-              }
-            },
-          ),
-        ],
+                    )
+                  ],
+                ),
+              ],
+            ),
+            addVerticalSpace(24.h),
+            buildMenuItem(
+              icon: Icons.account_circle_outlined,
+              title: 'ข้อมูลส่วนตัว',
+              onTap: () => go(context, const ProfileDetailPage()),
+            ),
+            buildMenuItem(icon: Icons.paid_outlined, title: 'รายได้ของฉัน'),
+            buildMenuItem(icon: Icons.workspace_premium_outlined, title: 'สมัครรับการเป็น helper'),
+            buildMenuItem(icon: Icons.help_center_outlined, title: 'ศูนย์ความทนช่วยเหลือ'),
+            buildMenuItem(icon: Icons.article_outlined, title: 'นโยบายความเป็นส่วนตัว'),
+            Divider(thickness: 1, height: 32.h),
+            buildMenuItem(icon: Icons.language, title: 'ภาษา'),
+            buildMenuItem(icon: Icons.settings_outlined, title: 'การตั้งค่า'),
+            buildMenuItem(
+              icon: Icons.logout,
+              title: 'ออกจากระบบ',
+              onTap: () async {
+                try {
+                  await AuthService().signOut();
+                  go(context, const SplashPage());
+                } catch (e) {
+                  TopSnackbar.show(context, 'Sign Out ล้มเหลว: $e');
+                }
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
