@@ -9,6 +9,8 @@ import 'package:help_helper/shared/componets/scaffold_customs.dart';
 import 'package:help_helper/shared/componets/space.dart';
 import 'package:help_helper/shared/utils/constants/enums.dart';
 
+import '../../../shared/utils/provider/provider.dart';
+
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key});
 
@@ -21,6 +23,8 @@ class _HomePageState extends ConsumerState<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final authMethod = ref.watch(authMethodProvider);
+
     final pages = [
       Center(
         child: Column(
@@ -31,8 +35,8 @@ class _HomePageState extends ConsumerState<HomePage> {
               styleKey: StyleKey.headline5,
             ),
             addVerticalSpace(12.h),
-            const Label(
-              'ล็อกอินสำเร็จด้วย Google Sign In',
+            Label(
+              'ล็อกอินสำเร็จด้วย $authMethod Sign In',
               styleKey: StyleKey.bodyText2,
             ),
           ],

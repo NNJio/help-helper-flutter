@@ -113,6 +113,7 @@ class LoginPage extends ConsumerWidget {
                 phoneNumber: phoneNumber,
                 verificationCompleted: (PhoneAuthCredential credential) async {
                   await FirebaseAuth.instance.signInWithCredential(credential);
+                  ref.read(authMethodProvider.notifier).state = 'Phone';
                   go(context, const HomePage());
                 },
                 verificationFailed: (FirebaseAuthException e) {
@@ -120,6 +121,7 @@ class LoginPage extends ConsumerWidget {
                 },
                 codeSent: (String verificationId, int? resendToken) {
                   ref.read(otpVerifyIdProvider.notifier).state = verificationId;
+                  ref.read(authMethodProvider.notifier).state = 'Phone';
                   go(context, const OtpPage());
                 },
                 codeAutoRetrievalTimeout: (String verificationId) {},
@@ -169,6 +171,7 @@ class LoginPage extends ConsumerWidget {
               try {
                 final auth = AuthService();
                 await auth.signInWithGoogle();
+                ref.read(authMethodProvider.notifier).state = 'Google';
                 go(context, const HomePage());
               } catch (e) {
                 TopSnackbar.show(context, 'Google Sign-In ล้มเหลว: $e');

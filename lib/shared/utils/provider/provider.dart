@@ -14,3 +14,4 @@ final currentPhoneProvider = StateProvider<String?>((ref) => null);
 //! Mock OTP
 
 final otpLoadingProvider = StateProvider<bool>((ref) => false);
+final authMethodProvider = StateProvider<String?>((ref) => null);

@@ -37,7 +37,7 @@ class _OtpPageState extends ConsumerState<OtpPage> {
     //! Mock OTP
 
     // ✅ โชว์ OTP ทันทีตอนเข้าหน้า (จำลอง)
-    Future.delayed(const Duration(milliseconds: 400), () {
+    Future.delayed(const Duration(seconds: 2), () {
       TopSnackbar.show(context, 'OTP ของคุณคือ $mockOtp', duration: 6);
       // ✅ จำลอง auto-fill
       _autoFillOtp(mockOtp ?? '123456');
@@ -53,35 +53,6 @@ class _OtpPageState extends ConsumerState<OtpPage> {
     // trigger การตรวจสอบรหัส
     _onOtpFilled(otp);
   }
-
-  // Future<void> _onOtpFilled(String code) async {
-  //   final verificationId = ref.read(otpVerifyIdProvider);
-  //   if (verificationId == null) {
-  //     TopSnackbar.show(context, 'ไม่พบรหัสยืนยัน');
-  //     _handling = false;
-  //     return;
-  //   }
-
-  //   try {
-  //     final credential = PhoneAuthProvider.credential(
-  //       verificationId: verificationId,
-  //       smsCode: code,
-  //     );
-
-  //     await FirebaseAuth.instance.signInWithCredential(credential);
-  //     Navigator.of(context).pushAndRemoveUntil(
-  //       MaterialPageRoute(builder: (_) => const HomePage()),
-  //       (route) => false,
-  //     );
-  //   } catch (e) {
-  //     TopSnackbar.show(context, 'OTP ไม่ถูกต้อง');
-  //     for (final c in _controllers) {
-  //       c.clear();
-  //     }
-  //     _nodes.first.requestFocus();
-  //     _handling = false;
-  //   }
-  // }
 
   Future<void> _onOtpFilled(String code) async {
     ref.read(otpLoadingProvider.notifier).state = true; // ✅ เริ่มโหลด
